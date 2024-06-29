@@ -12,13 +12,7 @@ use rusb::{Context, DeviceHandle, Direction, TransferType, UsbContext};
 #[cfg(feature = "serial_port")]
 use serialport::SerialPort;
 use std::{
-    cell::RefCell,
-    fs::File,
-    io::{self, Read, Write},
-    net::{IpAddr, SocketAddr, TcpStream},
-    path::Path,
-    rc::Rc,
-    time::Duration,
+    cell::RefCell, fs::File, io::{self, Read, Write}, net::{IpAddr, SocketAddr, TcpStream}, path::Path, rc::Rc, sync::{Arc, Mutex}, time::Duration
 };
 
 /// Default timeout in seconds for read/write operations
@@ -218,7 +212,7 @@ pub struct UsbDriver {
     product_id: u16,
     output_endpoint: u8,
     input_endpoint: u8,
-    device: Rc<RefCell<DeviceHandle<Context>>>,
+    device: Arc<Mutex<DeviceHandle<Context>>>,
     timeout: Duration,
 }
 
@@ -305,7 +299,7 @@ impl UsbDriver {
                             product_id,
                             output_endpoint,
                             input_endpoint,
-                            device: Rc::new(RefCell::new(device_handle)),
+                            device: Arc::new(Mutex::new(device_handle)),
                             timeout: timeout.unwrap_or(Duration::from_secs(DEFAULT_TIMEOUT_SECONDS)),
                         })
                     }
@@ -329,7 +323,7 @@ impl Driver for UsbDriver {
 
     fn write(&self, data: &[u8]) -> Result<()> {
         self.device
-            .try_borrow_mut()?
+            .lock().unwrap()
             .write_bulk(self.output_endpoint, data, self.timeout)
             .map_err(|e| PrinterError::Io(e.to_string()))?;
         Ok(())
@@ -337,7 +331,7 @@ impl Driver for UsbDriver {
 
     fn read(&self, buf: &mut [u8]) -> Result<usize> {
         self.device
-            .try_borrow_mut()?
+            .lock().unwrap()
             .read_bulk(self.input_endpoint, buf, self.timeout)
             .map_err(|e| PrinterError::Io(e.to_string()))
     }
