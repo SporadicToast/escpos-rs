@@ -7,7 +7,7 @@ use image::{DynamicImage, GenericImageView, Rgba};
 use std::fmt;
 
 /// Graphic density
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum GraphicDensity {
     /// 180dpi x 180dpi
     Low,
@@ -34,7 +34,7 @@ impl fmt::Display for GraphicDensity {
 }
 
 /// Graphic tone
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum GraphicTone {
     Monochrome,
     Multiple,
@@ -59,7 +59,7 @@ impl fmt::Display for GraphicTone {
 }
 
 /// Graphic color
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum GraphicColor {
     Color1,
     Color2,
@@ -90,7 +90,7 @@ impl fmt::Display for GraphicColor {
 }
 
 /// Graphic size
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum GraphicSize {
     Normal,
     Double,
@@ -114,7 +114,7 @@ impl fmt::Display for GraphicSize {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 // TODO: Make fields private
 pub struct GraphicOption {
     /// Image max width
@@ -170,7 +170,7 @@ impl GraphicOption {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Graphic {
     /// Image path
     path: String,

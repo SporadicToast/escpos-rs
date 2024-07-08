@@ -1,10 +1,12 @@
 //! DataMatrix
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::{PrinterError, Result};
 use std::fmt;
 
 /// DataMatrix type
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum DataMatrixType {
     Square(u8),
     Rectangle(u8, u8),
@@ -66,7 +68,7 @@ impl TryFrom<DataMatrixType> for (u8, u8, u8) {
 }
 
 /// DataMatrix option
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct DataMatrixOption {
     code_type: DataMatrixType,
     size: u8,
@@ -103,7 +105,7 @@ impl DataMatrixOption {
 }
 
 /// DataMatrix
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct DataMatrix {
     pub data: String,
     pub option: DataMatrixOption,

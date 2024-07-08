@@ -2,8 +2,10 @@
 
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
 /// PDF417 correction level
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize)]
 pub enum MaxiCodeMode {
     #[default]
     Mode2,
@@ -37,7 +39,7 @@ impl From<MaxiCodeMode> for u8 {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct MaxiCode {
     pub data: String,
     pub mode: MaxiCodeMode,

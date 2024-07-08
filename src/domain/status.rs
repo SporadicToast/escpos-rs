@@ -2,11 +2,13 @@
 //!
 //! [Epson Documentation](https://download4.epson.biz/sec_pubs/pos/reference_en/escpos/dle_eot.html)
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::PrinterError;
 use std::collections::HashMap;
 
 /// Printer real-time status
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum RealTimeStatusRequest {
     Printer,
     OfflineCause,
@@ -36,7 +38,7 @@ impl From<RealTimeStatusRequest> for (u8, u8) {
 }
 
 /// Printer real-time status response
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum RealTimeStatusResponse {
     // Printer status
     DrawerKickOutConnectorPin3Low,

@@ -1,10 +1,12 @@
 //! PDF417
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::{PrinterError, Result};
 use std::fmt;
 
 /// PDF417 correction level
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum Pdf417CorrectionLevel {
     Level0,
     Level1,
@@ -63,7 +65,7 @@ impl TryFrom<Pdf417CorrectionLevel> for (u8, u8) {
 }
 
 /// PDF417 type
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum Pdf417Type {
     #[default]
     Standard,
@@ -90,7 +92,7 @@ impl From<Pdf417Type> for u8 {
 
 /// PDF417 option
 // TODO: Make all Option type (barcode, qrcode, GS1, etc.) pub(crate) instead of pub?
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Pdf417Option {
     columns: u8,    // Default: 0
     rows: u8,       // Default: 0
@@ -164,7 +166,7 @@ impl Pdf417Option {
 }
 
 /// PDF417
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Pdf417 {
     pub data: String,
     pub option: Pdf417Option,

@@ -1,5 +1,7 @@
 //! 2D GS1 DataBar
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::{PrinterError, Result};
 use std::fmt;
 
@@ -8,7 +10,7 @@ const EXPANDED_STACKED_VALID_CHARS: [char; 36] = [
     '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '_', '{',
 ];
 
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum GS1DataBar2DType {
     #[default]
     Stacked,
@@ -36,7 +38,7 @@ impl From<GS1DataBar2DType> for u8 {
     }
 }
 
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum GS1DataBar2DWidth {
     S,
     #[default]
@@ -65,7 +67,7 @@ impl From<GS1DataBar2DWidth> for u8 {
 }
 
 /// GS1 DataBar option
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct GS1DataBar2DOption {
     width: GS1DataBar2DWidth,
     code_type: GS1DataBar2DType,
@@ -89,7 +91,7 @@ impl GS1DataBar2DOption {
 }
 
 /// 2D GS1 DataBar
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct GS1DataBar2D {
     pub data: String,
     pub option: GS1DataBar2DOption,

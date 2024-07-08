@@ -3,11 +3,12 @@
 use crate::domain::PageCode;
 use crate::errors::PrinterError;
 use lazy_static::lazy_static;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::iter::{IntoIterator, Iterator};
 
 /// Page codes table list
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub(crate) enum PageCodeTable {
     PC437,
     Katakana,

@@ -2,8 +2,10 @@
 
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
 /// Underline mode
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum UnderlineMode {
     None,
     Single,
@@ -21,7 +23,7 @@ impl fmt::Display for UnderlineMode {
 }
 
 /// Text font
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum Font {
     A,
     B,
@@ -39,7 +41,7 @@ impl fmt::Display for Font {
 }
 
 /// Character page code
-#[derive(Debug, Default, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub enum PageCode {
     #[default]
     PC437,
@@ -173,7 +175,7 @@ impl From<PageCode> for u8 {
 }
 
 /// Character page code
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum CharacterSet {
     USA,
     France,

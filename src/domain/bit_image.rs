@@ -7,7 +7,7 @@ use image::{DynamicImage, GenericImage, GenericImageView, Rgba};
 use std::fmt;
 
 /// BitImage size
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum BitImageSize {
     #[default]
     Normal,
@@ -39,7 +39,7 @@ impl From<&BitImageSize> for u8 {
 }
 
 /// Bit image option
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct BitImageOption {
     /// Image max width
     max_width: Option<u32>,
@@ -85,7 +85,7 @@ impl BitImageOption {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct BitImage {
     path: String,
     image: DynamicImage,

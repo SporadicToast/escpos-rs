@@ -2,13 +2,15 @@
 
 #![cfg(feature = "codes_2d")]
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::Result;
 use std::fmt;
 
 const QRCODE_MAX_DATA_SIZE: usize = 7089;
 
 /// QR Code model
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum QRCodeModel {
     Model1,
     Model2,
@@ -36,7 +38,7 @@ impl fmt::Display for QRCodeModel {
 }
 
 /// QR Code error correction level
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum QRCodeCorrectionLevel {
     L,
     M,
@@ -67,7 +69,7 @@ impl fmt::Display for QRCodeCorrectionLevel {
 }
 
 /// QR code option
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct QRCodeOption {
     model: QRCodeModel,
     size: u8,
@@ -111,7 +113,7 @@ impl QRCodeOption {
 }
 
 /// QR code
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct QRCode {
     pub data: String,
     pub option: QRCodeOption,

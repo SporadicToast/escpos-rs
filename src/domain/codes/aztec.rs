@@ -1,10 +1,12 @@
 //! Aztec code
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::{PrinterError, Result};
 use std::fmt;
 
 /// Aztec code mode
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum AztecMode {
     FullRange(u8),
     Compact(u8),
@@ -51,7 +53,7 @@ impl TryFrom<AztecMode> for (u8, u8) {
 }
 
 /// Aztec code option
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AztecOption {
     mode: AztecMode,
     size: u8,
@@ -105,7 +107,7 @@ impl AztecOption {
 }
 
 /// Aztec code
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Aztec {
     pub data: String,
     pub option: AztecOption,

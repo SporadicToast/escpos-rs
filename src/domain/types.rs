@@ -2,8 +2,10 @@
 
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
 /// Cash drawer pin
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum CashDrawer {
     Pin2,
     Pin5,
@@ -19,7 +21,7 @@ impl fmt::Display for CashDrawer {
 }
 
 /// Justify mode
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum JustifyMode {
     LEFT,
     CENTER,
@@ -37,7 +39,7 @@ impl fmt::Display for JustifyMode {
 }
 
 /// Debug mode (decimal or hexadecimal)
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub enum DebugMode {
     Hex,
     Dec,

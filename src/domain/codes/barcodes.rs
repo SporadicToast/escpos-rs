@@ -3,6 +3,8 @@
 #![cfg(feature = "barcodes")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
+use serde::{Deserialize, Serialize};
+
 use crate::errors::{PrinterError, Result};
 use std::fmt;
 
@@ -16,7 +18,7 @@ const CODABAR_VALID_CHARS: [char; 24] = [
 ];
 
 /// Barcode system (function A used)
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum BarcodeSystem {
     UPCA,
     UPCE,
@@ -56,7 +58,7 @@ impl fmt::Display for BarcodeSystem {
 }
 
 /// Barcode fonts
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum BarcodeFont {
     #[default]
     A,
@@ -104,7 +106,7 @@ impl fmt::Display for BarcodeFont {
 }
 
 /// Barcode position
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum BarcodePosition {
     None,
     Above,
@@ -135,7 +137,7 @@ impl fmt::Display for BarcodePosition {
 }
 
 /// Barcode width
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum BarcodeWidth {
     XS,
     S,
@@ -171,7 +173,7 @@ impl From<&str> for BarcodeWidth {
 }
 
 /// Barcode height
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize)]
 pub enum BarcodeHeight {
     XS,
     #[default]
@@ -207,7 +209,7 @@ impl From<&str> for BarcodeHeight {
 }
 
 /// Barcode option
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BarcodeOption {
     width: BarcodeWidth,
     height: BarcodeHeight,
@@ -259,7 +261,7 @@ impl BarcodeOption {
 }
 
 /// Barcode
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Barcode {
     pub system: BarcodeSystem,
     pub data: String,
